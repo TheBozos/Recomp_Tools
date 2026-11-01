@@ -1,0 +1,8 @@
+# The scripts run in bash (Linux, MSYS2): keep LF even where git converts line endings (core.autocrlf on Windows).
+*.sh text eol=lf
+*.py text eol=lf
+*.pyw text eol=lf
+bench-status text eol=lf
+# Launched by Windows itself, which wants CRLF.
+*.cmd text eol=crlf
+*.vbs text eol=crlf
