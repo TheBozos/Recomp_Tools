@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Status of the shared PS2Recomp bench lock, from bash (Git Bash, MSYS2, Linux).
+exec python3 -I "$(dirname "$0")/bench_status.py" "$@"
