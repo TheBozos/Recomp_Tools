@@ -86,7 +86,9 @@ def run_engine(ref, names, dry):
         build = [BASH, os.path.join(wt, port['build']).replace('\\', '/')]
         # A build takes the whole shared bench (the port's own lock: other sessions' timed runs wait for it).
         if os.path.exists(os.path.join(port['dir'], 'scripts', 'bench_run.sh')):
-            build = [BASH, os.path.join(wt, 'scripts', 'bench_run.sh').replace('\\', '/'), '--alone', '60', 'engine check %s' % ref] + build
+            # The lock script is the port's own (its pinned engine's protocol, the one the other sessions use), not the
+            # scratch copy's: a newer engine's lock script may not agree with it, and the two would wait for each other.
+            build = [BASH, os.path.join(port['dir'], 'scripts', 'bench_run.sh').replace('\\', '/'), '--alone', '60', 'engine check %s' % ref] + build
         steps.append(build)
         if dry:
             print('== %s' % name)
