@@ -21,8 +21,9 @@ import state_check as sc
 
 CFG = sc.CFG
 REPO = 'TheBozos/BozoEngine'
-# The ports' scripts are for MSYS2's bash (a bare `bash` can be WSL's, which cannot see D:/ paths).
-BASH = 'C:/msys64/usr/bin/bash.exe' if os.path.exists('C:/msys64/usr/bin/bash.exe') else 'bash'
+# The ports' scripts run in Git for Windows' bash, as the sessions run them (a bare `bash` can be WSL's, which cannot see D:/ paths;
+# MSYS2's bash runs the builds but the bench lock never takes a free slot under it: the waiter queues forever and blocks every port).
+BASH = 'C:/Program Files/Git/usr/bin/bash.exe' if os.path.exists('C:/Program Files/Git/usr/bin/bash.exe') else 'bash'
 
 
 def run(cmd, cwd=None, check=True, **kw):
@@ -67,8 +68,44 @@ def table():
         print('%-10s %-8s %-32s %s' % (name, pin[:7], rel, note))
 
 
-def run_engine(ref, names, dry):
+def bench_busy():
+    """Who holds the shared bench or waits for it right now (an empty list: it is free and nobody is queued)."""
+    out = []
+    for f in ('D:/ps2recomp_bench.lock', 'D:/ps2recomp_bench2.lock'):
+        try:
+            line = open(f, encoding='utf-8', errors='replace').read().strip()
+        except OSError:
+            line = ''
+        if line:
+            out.append(line)
+    q = 'D:/ps2recomp_bench.queue.d'
+    if os.path.isdir(q):
+        out += ['waiting: ' + n for n in sorted(os.listdir(q))]
+    return out
+
+
+def run_tree(cmd, cwd, env, timeout):
+    """Runs cmd; when it outlives the timeout, kills it and everything it started (a waiter left behind keeps its queue entry
+    refreshed and blocks the whole bench)."""
+    p = subprocess.Popen(cmd, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    try:
+        out, _ = p.communicate(timeout=timeout)
+        return p.returncode, out
+    except subprocess.TimeoutExpired:
+        subprocess.run(['taskkill', '/F', '/T', '/PID', str(p.pid)], capture_output=True)
+        out, _ = p.communicate()
+        return 124, (out or '') + ' TIMED OUT after %d minutes: killed with its process tree' % (timeout // 60)
+
+
+def run_engine(ref, names, dry, timeout_min=90, force=False):
     worst = 0
+    busy = bench_busy()
+    if busy and not dry and not force:
+        print('The shared bench is not free (a build would queue behind these, and a stuck waiter blocks every port):')
+        for b in busy:
+            print('   ' + b)
+        print('Run again when it is free, or pass --force to queue anyway.')
+        return 1
     for name in names:
         port = CFG['ports'][name]
         if not port.get('build'):
@@ -155,12 +192,14 @@ def main():
     ap.add_argument('--port', action='append')
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--clean', action='store_true')
+    ap.add_argument('--timeout', type=int, default=90, help='minutes a build (lock wait included) may take before it is killed')
+    ap.add_argument('--force', action='store_true', help='queue for the bench even when it is busy')
     a = ap.parse_args()
     if a.clean:
         clean()
         return 0
     if a.run:
-        return run_engine(a.run, a.port or [n for n, p in CFG['ports'].items() if p.get('build') and p['states']], a.dry_run)
+        return run_engine(a.run, a.port or [n for n, p in CFG['ports'].items() if p.get('build') and p['states']], a.dry_run, a.timeout, a.force)
     table()
     return 0
 
