@@ -1,0 +1,14 @@
+{
+ "test_menu.state": {
+  "frame": 7050,
+  "delta": 120,
+  "ram_sha256": "5bdbda242039ef64d328d3195a2c50332ba5ab9c0965e47bc8b8fdb89d19b919",
+  "exe_time": "2026-11-27 01:29"
+ },
+ "test_song.state": {
+  "frame": 11400,
+  "delta": 120,
+  "ram_sha256": "cb5647ca6096f17d8701932c11ab45cc56357a75279a7630125e167f7246e9aa",
+  "exe_time": "2026-11-27 01:29"
+ }
+}

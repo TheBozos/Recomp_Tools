@@ -1,0 +1,14 @@
+{
+ "s126b.state": {
+  "frame": 62612,
+  "delta": 120,
+  "ram_sha256": "636191a8cd905538107db1d3e1c21b0ec9211fa5da6ff651456de3eb846ce6f2",
+  "exe_time": "2026-11-26 20:40"
+ },
+ "s242k.state": {
+  "frame": 247907,
+  "delta": 120,
+  "ram_sha256": "58e83128734178cfd50ed6b3e10da6da30d351f52d8dad45430dc248a84d2d28",
+  "exe_time": "2026-11-26 20:40"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "s25000_wind_forest_tamatoch.state": {
+  "frame": 25000,
+  "delta": 120,
+  "ram_sha256": "7b9e864367773c67575fc65bda388a15497fab30238e1e17ca04c74cde4af617",
+  "exe_time": "2026-11-25 15:08"
+ },
+ "s33600_after_lesson.state": {
+  "frame": 33600,
+  "delta": 120,
+  "ram_sha256": "aae24a9a563a27a51558dfdda771f33977572c6fcdbf40660029888943c75a46",
+  "exe_time": "2026-11-25 15:08"
+ }
+}

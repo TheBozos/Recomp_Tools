@@ -1,0 +1,135 @@
+{
+  "_note": "One entry per port. exe: the headless runner (relative to the port's folder). args: always passed. states: save states to keep loading (relative to the port's folder, or absolute); the vault keeps a copy of each in D:/BozoStates/<port>/ so a cleanup of build/ cannot lose them. delta: frames to run after the state's own frame.",
+  "scratch": "D:/BozoScratch/statecheck",
+  "vault": "D:/BozoStates",
+  "engine_repo": "D:/BozoEngine",
+  "ports": {
+    "Onimusha": {
+      "dir": "D:/Onimusha_Recomp",
+      "exe": "build/bozo/oni-headless.exe",
+      "args": [
+        "--headless",
+        "--quiet"
+      ],
+      "build": "scripts/build_runtime.sh",
+      "states": [
+        "build/story/s126b.state",
+        "build/story/s242k.state"
+      ],
+      "delta": 120,
+      "link": [
+        "game"
+      ]
+    },
+    "Shinobido": {
+      "dir": "D:/Shinobido_WOTN_Recomp",
+      "exe": "build/bozo/shino-headless.exe",
+      "args": [
+        "--headless",
+        "--quiet",
+        "--mute"
+      ],
+      "build": "scripts/build_runtime.sh",
+      "states": [
+        "build/final1.state",
+        "build/s132.state"
+      ],
+      "delta": 120,
+      "link": [
+        "game"
+      ]
+    },
+    "Amplitude": {
+      "dir": "D:/Amplitude_Recomp",
+      "exe": "build/bozo/amp-headless.exe",
+      "args": [
+        "--headless",
+        "--quiet",
+        "--mute"
+      ],
+      "build": "scripts/build_runtime.sh",
+      "states": [
+        "build/test_menu.state",
+        "build/test_song.state"
+      ],
+      "delta": 120,
+      "link": [
+        "game"
+      ]
+    },
+    "TTA": {
+      "dir": "D:/TLOTR_TTA_Recomp",
+      "exe": "build/bozo/tta-headless.exe",
+      "args": [
+        "--headless"
+      ],
+      "build": "scripts/build_runtime.sh",
+      "states": [
+        "build/states/forest_14900.state",
+        "build/states/battle1_5800.state"
+      ],
+      "delta": 120,
+      "link": [
+        "game",
+        "generated"
+      ]
+    },
+    "JC2": {
+      "dir": "D:/JC2_Recomp",
+      "exe": "build/bozo_game/jc2-headless.exe",
+      "args": [
+        "--headless"
+      ],
+      "build": null,
+      "states": [
+        "build/bozo/states/s25000_wind_forest_tamatoch.state",
+        "build/bozo/states/s33600_after_lesson.state"
+      ],
+      "delta": 120,
+      "link": [
+        "game",
+        "generated"
+      ]
+    },
+    "TMB": {
+      "dir": "D:/TMB_Recomp",
+      "exe": null,
+      "args": [
+        "--headless"
+      ],
+      "build": "scripts/build_runtime.sh",
+      "states": [],
+      "delta": 120
+    },
+    "DC": {
+      "dir": "D:/DC_Recomp",
+      "exe": null,
+      "args": [
+        "--headless"
+      ],
+      "build": "scripts/build_runtime.sh",
+      "states": [],
+      "delta": 120
+    },
+    "SC3": {
+      "dir": "D:/SoulCaliburIII_Recomp",
+      "exe": null,
+      "args": [
+        "--headless"
+      ],
+      "build": "scripts/bozo_build.sh",
+      "states": [],
+      "delta": 120
+    },
+    "VP2S": {
+      "dir": "D:/VP2S_Recomp",
+      "exe": null,
+      "args": [
+        "--headless"
+      ],
+      "build": null,
+      "states": [],
+      "delta": 120
+    }
+  }
+}

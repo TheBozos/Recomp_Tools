@@ -1,0 +1,14 @@
+{
+ "forest_14900.state": {
+  "frame": 14900,
+  "delta": 120,
+  "ram_sha256": "4fe3cf85b450765c144d28c39236e586fe0ea10535969f91d0fc113220e97868",
+  "exe_time": "2026-11-27 00:00"
+ },
+ "battle1_5800.state": {
+  "frame": 5800,
+  "delta": 120,
+  "ram_sha256": "7f6935507b8f1d8abe6b05407f7d0bf8241184132d5cee3ad130112688d2929f",
+  "exe_time": "2026-11-27 00:00"
+ }
+}
